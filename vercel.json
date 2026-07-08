@@ -1,4 +1,9 @@
 {
   "version": 2,
-  "framework": "nextjs"
+  "builds": [
+    {
+      "src": "cyberpath/package.json",
+      "use": "@vercel/next"
+    }
+  ]
 }
