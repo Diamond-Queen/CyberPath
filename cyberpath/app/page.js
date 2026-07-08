@@ -18,9 +18,9 @@ const analyticsCards = [
 ];
 
 const quickActions = [
-  { title: "Explore roadmaps", detail: "Choose the role path that fits your ambitions." },
-  { title: "Track progress", detail: "Mark milestones as you complete each activity." },
-  { title: "Build skills", detail: "Focus on the most in-demand cybersecurity topics." }
+  { title: "Explore role paths", detail: "Choose a roadmap that matches your ambitions and experience level." },
+  { title: "Track momentum", detail: "Monitor milestone completion and unlock the next step in your path." },
+  { title: "Build practical skills", detail: "Focus on the most relevant cybersecurity topics with guided practice." }
 ];
 
 export default function Home() {
@@ -30,6 +30,8 @@ export default function Home() {
   const [remainingMilestones, setRemainingMilestones] = useState(null);
 
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const lastGoal = window.localStorage.getItem("roadmap-last-goal");
     if (!lastGoal) {
       return;
@@ -39,12 +41,17 @@ export default function Home() {
     const completed = JSON.parse(window.localStorage.getItem(`roadmap-completed-${lastGoal}`) || "[]");
     const remaining = roadmap ? roadmap.milestones.length - completed.length : null;
 
-    setToastGoal(lastGoal);
-    setRemainingMilestones(remaining);
-    setIsToastVisible(true);
+    const showToast = window.setTimeout(() => {
+      setToastGoal(lastGoal);
+      setRemainingMilestones(remaining);
+      setIsToastVisible(true);
+    }, 0);
 
-    const timeout = setTimeout(() => setIsToastVisible(false), 6000);
-    return () => clearTimeout(timeout);
+    const timeout = window.setTimeout(() => setIsToastVisible(false), 6000);
+    return () => {
+      clearTimeout(showToast);
+      clearTimeout(timeout);
+    };
   }, []);
 
   return (
@@ -82,11 +89,10 @@ export default function Home() {
           <span className={styles.badge}>Secure your career</span>
           <h1>CyberPath</h1>
           <p className={styles.lead}>
-            Personalized cybersecurity roadmaps, progress tracking, and guided milestones for every experience level.
-            Start your journey with a SaaS-style dashboard built for modern learners.
+            Advance your cybersecurity career with structured roadmaps, milestone-based progression, and practical learning guidance built for modern professionals.
           </p>
         </div>
-
+        <br></br>
         <div className={styles.heroCards}>
           {dashboardStats.map((stat) => (
             <article key={stat.label} className={styles.statCard}>
@@ -109,21 +115,21 @@ export default function Home() {
 
       <div className={styles.summaryGrid}>
         <article className={styles.summaryCard}>
-          <h2>Performance overview</h2>
+          <h2>Learning overview</h2>
           <p>
-            Your development dashboard shows current growth, focus areas, and high-value activities for a strong cybersecurity career.
+            Your dashboard highlights your current growth, the skills you are building, and the next actions that will create the most momentum.
           </p>
         </article>
         <article className={styles.summaryCard}>
-          <h2>Active goal</h2>
+          <h2>Role-based guidance</h2>
           <p>
-            Choose a goal to open a detailed roadmap with phases, skills, and milestone completion tracking.
+            Choose a role to open a detailed roadmap with phases, skill areas, milestone progression, and guided practice.
           </p>
         </article>
         <article className={styles.summaryCard}>
-          <h2>What's next?</h2>
+          <h2>What comes next?</h2>
           <p>
-            Complete tasks consistently to see progress, unlock new career paths, and measure your outcomes in real time.
+            Complete tasks consistently to unlock new milestones, deepen your expertise, and build a more confident career path over time.
           </p>
         </article>
       </div>

@@ -1,0 +1,32 @@
+{
+  "scores": {
+    "Cybersecurity Engineer": {
+      "0": {
+        "attempts": [
+          {
+            "score": 75,
+            "ts": 1783529670731
+          }
+        ],
+        "last": 75
+      }
+    },
+    "Security Consultant": {
+      "0": {
+        "attempts": [
+          {
+            "score": 100,
+            "ts": 1783534375125
+          }
+        ],
+        "last": 100
+      }
+    }
+  },
+  "unlocked": {
+    "Security Consultant": [
+      0,
+      1
+    ]
+  }
+}
